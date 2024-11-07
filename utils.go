@@ -2,7 +2,6 @@ package ftrace
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strings"
 )
@@ -17,7 +16,7 @@ func trim(s string) string {
 }
 
 func readFileOr(filename string, deflt string) string {
-	data, err := ioutil.ReadFile(filename)
+	data, err := os.ReadFile(filename)
 	if err != nil {
 		return deflt
 	}
@@ -25,7 +24,7 @@ func readFileOr(filename string, deflt string) string {
 }
 
 func writeFile(filename string, data string) error {
-	return ioutil.WriteFile(filename, []byte(data), 0755)
+	return os.WriteFile(filename, []byte(data), 0755)
 }
 
 func appendFile(filename string, data string) error {
