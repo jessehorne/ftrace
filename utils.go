@@ -24,7 +24,15 @@ func readFileOr(filename string, deflt string) string {
 }
 
 func writeFile(filename string, data string) error {
-	return os.WriteFile(filename, []byte(data), 0755)
+	f, err := os.OpenFile(filename, os.O_WRONLY, 0755)
+	if err != nil {
+		return err
+	}
+	_, err = f.Write([]byte(data))
+	if err1 := f.Close(); err1 != nil && err == nil {
+		err = err1
+	}
+	return err
 }
 
 func appendFile(filename string, data string) error {
